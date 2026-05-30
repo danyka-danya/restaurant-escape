@@ -1,0 +1,314 @@
+/* ============================================================
+   Restaurant Escape — детский хоррор-побег
+   Палитра: deep navy + neon orange + soft violet + bone cream
+   ============================================================ */
+
+:root {
+  --bg-deep: #0a0e27;
+  --bg-room: #131a3a;
+  --neon-orange: #ff7b35;
+  --violet: #9d4edd;
+  --bone: #f4e9cd;
+  --bone-dim: rgba(244, 233, 205, 0.55);
+  --danger: #ef4444;
+  --safe: #34d399;
+
+  --hud-h: 56px;
+  --joy-size: 140px;
+  --hide-size: 96px;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  user-select: none;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--bg-deep);
+  color: var(--bone);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+  overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: none;
+}
+
+body {
+  /* safe-area под notch и нижний бар iPhone */
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+/* ============================================================
+   GAME ROOT
+   ============================================================ */
+.game {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: radial-gradient(ellipse at center, var(--bg-room) 0%, var(--bg-deep) 70%);
+}
+
+#game-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+}
+
+/* ============================================================
+   HUD сверху
+   ============================================================ */
+.hud {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--hud-h);
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(180deg, rgba(10, 14, 39, 0.85) 0%, rgba(10, 14, 39, 0) 100%);
+  pointer-events: none;
+  z-index: 10;
+}
+
+.hud__keys {
+  display: flex;
+  gap: 6px;
+}
+
+.hud__key {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(244, 233, 205, 0.08);
+  border: 1.5px solid var(--bone-dim);
+  display: grid;
+  place-items: center;
+  color: var(--bone-dim);
+  font-size: 14px;
+  transition: all 0.4s ease;
+}
+
+.hud__key.is-collected {
+  background: var(--neon-orange);
+  border-color: var(--neon-orange);
+  color: var(--bg-deep);
+  box-shadow: 0 0 16px rgba(255, 123, 53, 0.55);
+}
+
+.hud__room {
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--bone-dim);
+}
+
+/* ============================================================
+   Виртуальный джойстик слева снизу
+   ============================================================ */
+.joystick {
+  position: absolute;
+  left: calc(24px + env(safe-area-inset-left));
+  bottom: calc(32px + env(safe-area-inset-bottom));
+  width: var(--joy-size);
+  height: var(--joy-size);
+  z-index: 20;
+  touch-action: none;
+}
+
+.joystick__base {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(244, 233, 205, 0.06);
+  border: 2px solid rgba(244, 233, 205, 0.18);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.joystick__stick {
+  position: absolute;
+  width: 56px;
+  height: 56px;
+  left: 50%;
+  top: 50%;
+  margin: -28px 0 0 -28px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, var(--neon-orange), #c14a17);
+  box-shadow: 0 0 24px rgba(255, 123, 53, 0.4), inset 0 0 12px rgba(0, 0, 0, 0.3);
+  transition: transform 0.05s ease-out;
+  will-change: transform;
+}
+
+/* ============================================================
+   Кнопка «спрятаться» справа снизу
+   ============================================================ */
+.hide-btn {
+  position: absolute;
+  right: calc(24px + env(safe-area-inset-right));
+  bottom: calc(48px + env(safe-area-inset-bottom));
+  width: var(--hide-size);
+  height: var(--hide-size);
+  z-index: 20;
+  border: none;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, var(--violet), #5a2a8c);
+  color: var(--bone);
+  box-shadow: 0 0 24px rgba(157, 78, 221, 0.4), inset 0 0 12px rgba(0, 0, 0, 0.3);
+  display: grid;
+  place-items: center;
+  gap: 2px;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+  touch-action: manipulation;
+}
+
+.hide-btn:active {
+  transform: scale(0.92);
+}
+
+.hide-btn.is-hiding {
+  background: radial-gradient(circle at 30% 30%, var(--safe), #15803d);
+  box-shadow: 0 0 32px rgba(52, 211, 153, 0.6);
+}
+
+.hide-btn__icon {
+  font-size: 26px;
+  line-height: 1;
+}
+
+.hide-btn__lbl {
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.hide-btn[hidden] {
+  display: none;
+}
+
+/* ============================================================
+   START OVERLAY
+   ============================================================ */
+.start-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 14, 39, 0.96);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  z-index: 100;
+  animation: fadeIn 0.3s ease;
+}
+
+.start-overlay[hidden] {
+  display: none;
+}
+
+.start-overlay__panel {
+  max-width: 340px;
+  text-align: center;
+}
+
+.start-overlay__title {
+  font-size: 32px;
+  margin: 0 0 16px;
+  color: var(--neon-orange);
+  text-shadow: 0 0 24px rgba(255, 123, 53, 0.5);
+  letter-spacing: 0.02em;
+}
+
+.start-overlay__sub {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--bone-dim);
+  margin: 0 0 28px;
+}
+
+.start-overlay__btn {
+  display: inline-block;
+  padding: 14px 36px;
+  background: var(--neon-orange);
+  color: var(--bg-deep);
+  border: none;
+  border-radius: 999px;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 0 32px rgba(255, 123, 53, 0.4);
+  transition: transform 0.1s ease;
+}
+
+.start-overlay__btn:active {
+  transform: scale(0.96);
+}
+
+.start-overlay__hint {
+  margin: 24px 0 0;
+  font-size: 12px;
+  color: rgba(244, 233, 205, 0.35);
+}
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+.toast {
+  position: fixed;
+  bottom: calc(180px + env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(10, 14, 39, 0.92);
+  color: var(--bone);
+  padding: 12px 20px;
+  border-radius: 999px;
+  border: 1px solid rgba(244, 233, 205, 0.15);
+  font-size: 14px;
+  z-index: 50;
+  animation: toastIn 0.25s ease;
+}
+
+.toast[hidden] {
+  display: none;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translate(-50%, 10px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+/* ============================================================
+   В пейзажной — подсказка повернуть
+   ============================================================ */
+@media (orientation: landscape) and (max-height: 500px) {
+  .game::after {
+    content: "Поверни телефон 📱";
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: var(--bg-deep);
+    color: var(--bone);
+    font-size: 18px;
+    z-index: 200;
+  }
+}

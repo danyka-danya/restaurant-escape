@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8">
-  <title>Побег из ресторана</title>
+  <title>Побег из ресторана 3D</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
   <meta name="theme-color" content="#0a0e27">
@@ -15,12 +15,15 @@
   <link rel="apple-touch-icon" href="assets/icon-192.png">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 
-  <link rel="stylesheet" href="css/styles.css?v=1">
+  <link rel="stylesheet" href="css/styles.css?v=2">
 </head>
 
 <body>
   <div class="game">
     <canvas id="game-canvas" aria-label="Игровое поле"></canvas>
+
+    <!-- Зона свайпа для камеры (правая часть экрана) -->
+    <div class="look-zone" id="look-zone" aria-hidden="true"></div>
 
     <div class="hud">
       <div class="hud__keys" id="hud-keys">
@@ -41,24 +44,25 @@
       <span class="hide-btn__icon">👁</span>
       <span class="hide-btn__lbl">Спрятаться</span>
     </button>
+
+    <div class="loading" id="loading">
+      <div class="loading__spinner"></div>
+      <div class="loading__text">Готовим ресторан…</div>
+    </div>
   </div>
 
-  <div class="start-overlay" id="start-overlay">
+  <div class="start-overlay" id="start-overlay" hidden>
     <div class="start-overlay__panel">
       <h1 class="start-overlay__title">Побег из ресторана</h1>
       <p class="start-overlay__sub">Ресторан закрылся, а ты остался внутри…<br>Собери 4 предмета и беги к парадной двери.</p>
-      <button class="start-overlay__btn" id="start-btn">Начать</button>
-      <p class="start-overlay__hint">Лучше играть в портретной ориентации</p>
+      <button class="start-overlay__btn" id="start-btn">Войти</button>
+      <p class="start-overlay__hint">Левый джойстик — идти.<br>Правая половина экрана — свайп, чтобы крутить камеру.</p>
     </div>
   </div>
 
   <div class="toast" id="toast" hidden></div>
 
-  <script src="js/save.js?v=1"></script>
-  <script src="js/entities.js?v=1"></script>
-  <script src="js/scenes.js?v=1"></script>
-  <script src="js/controls.js?v=1"></script>
-  <script src="js/game.js?v=1"></script>
+  <script type="module" src="js/game3d.js?v=2"></script>
   <script>
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {

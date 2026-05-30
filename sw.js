@@ -1,14 +1,14 @@
-const CACHE = "restaurant-escape-v1";
+const CACHE = "restaurant-escape-v2";
 const ASSETS = [
   "./",
   "./index.html",
   "./manifest.webmanifest",
   "./css/styles.css",
   "./js/save.js",
-  "./js/entities.js",
-  "./js/scenes.js",
-  "./js/controls.js",
-  "./js/game.js",
+  "./js/game3d.js",
+  "./js/scene3d.js",
+  "./js/player3d.js",
+  "./js/controls3d.js",
   "./assets/favicon.svg"
 ];
 
@@ -27,6 +27,7 @@ self.addEventListener("activate", (e) => {
 self.addEventListener("fetch", (e) => {
   if (e.request.method !== "GET") return;
   const url = new URL(e.request.url);
+  // не кешируем кросс-домен (Three.js с CDN загружается первый раз онлайн)
   if (url.origin !== self.location.origin) return;
 
   e.respondWith(

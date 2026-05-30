@@ -4,10 +4,7 @@
 
 ## Локальный запуск
 
-```powershell
-cd "c:\Users\Denis\Desktop\uwu\Новая папка\restaurant-escape"
-python -m http.server 8000
-```
+
 
 Открыть на десктопе: http://localhost:8000
 

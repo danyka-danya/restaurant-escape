@@ -2,13 +2,12 @@
    save.js — localStorage-обёртка для прогресса
    ========================================================================= */
 (function () {
-  const KEY = "restaurant-escape-save-v1";
+  const KEY = "restaurant-escape-save-v2";
 
   const DEFAULT_STATE = {
-    keysCollected: [],   // массив id ключей: ['food', 'photo', ...]
-    currentRoom: "hall", // id текущей комнаты
+    keysCollected: [],
     seenIntro: false,
-    playerName: null,    // персонализация — имя героя
+    playerName: null,
   };
 
   function load() {
@@ -32,5 +31,12 @@
     try { localStorage.removeItem(KEY); } catch (e) {}
   }
 
-  window.Save = { load, save, reset, DEFAULT_STATE };
+  function markKey(state, id) {
+    if (!state.keysCollected.includes(id)) {
+      state.keysCollected.push(id);
+      save(state);
+    }
+  }
+
+  window.Save = { load, save, reset, markKey, DEFAULT_STATE };
 })();

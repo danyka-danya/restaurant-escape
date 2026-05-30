@@ -15,14 +15,13 @@
   <link rel="apple-touch-icon" href="assets/icon-192.png">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 
-  <link rel="stylesheet" href="css/styles.css?v=2">
+  <link rel="stylesheet" href="css/styles.css?v=3">
 </head>
 
 <body>
   <div class="game">
     <canvas id="game-canvas" aria-label="Игровое поле"></canvas>
 
-    <!-- Зона свайпа для камеры (правая часть экрана) -->
     <div class="look-zone" id="look-zone" aria-hidden="true"></div>
 
     <div class="hud">
@@ -54,15 +53,24 @@
   <div class="start-overlay" id="start-overlay" hidden>
     <div class="start-overlay__panel">
       <h1 class="start-overlay__title">Побег из ресторана</h1>
-      <p class="start-overlay__sub">Ресторан закрылся, а ты остался внутри…<br>Собери 4 предмета и беги к парадной двери.</p>
-      <button class="start-overlay__btn" id="start-btn">Войти</button>
-      <p class="start-overlay__hint">Левый джойстик — идти.<br>Правая половина экрана — свайп, чтобы крутить камеру.</p>
+      <p class="start-overlay__sub">Ты остался в ресторане после закрытия.<br>Призрак Повара ищет тебя…<br>Собери 4 предмета и беги к двери.</p>
+      <button class="start-overlay__btn" id="start-btn">Начать</button>
+      <p class="start-overlay__hint">Левый джойстик — идти.<br>Правая половина экрана — свайп, чтобы крутить камеру.<br>Фиолетовая кнопка — спрятаться у столов/шкафов.</p>
+    </div>
+  </div>
+
+  <div class="cutscene" id="cutscene" hidden>
+    <div class="cutscene__panel">
+      <h2 class="cutscene__title" id="cutscene-title">…</h2>
+      <p class="cutscene__body" id="cutscene-body">…</p>
+      <button class="cutscene__btn" id="cutscene-btn">ОК</button>
     </div>
   </div>
 
   <div class="toast" id="toast" hidden></div>
 
-  <script type="module" src="js/game3d.js?v=2"></script>
+  <script src="js/save.js?v=3"></script>
+  <script type="module" src="js/game3d.js?v=3"></script>
   <script>
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {

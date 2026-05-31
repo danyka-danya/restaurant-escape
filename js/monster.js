@@ -1,7 +1,7 @@
 /* =========================================================================
    monster.js — призрак-повар: патруль по waypoints + конус зрения + поимка
    ========================================================================= */
-import * as THREE from "https://unpkg.com/three@0.163.0/build/three.module.js";
+import * as THREE from "./vendor/three.module.min.js";
 import { lineBlocked } from "./scene3d.js";
 
 const VISION_RANGE_NORMAL = 8;

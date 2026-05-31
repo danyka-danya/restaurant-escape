@@ -1,7 +1,7 @@
 /* =========================================================================
    player3d.js — 3D-игрок: капсула + голова + кепка + ФОНАРИК (SpotLight)
    ========================================================================= */
-import * as THREE from "https://unpkg.com/three@0.163.0/build/three.module.js";
+import * as THREE from "./vendor/three.module.min.js";
 
 export function buildPlayer() {
   const group = new THREE.Group();

@@ -1,7 +1,7 @@
 /* =========================================================================
    game3d.js — main entry: Three.js renderer + game state machine
    ========================================================================= */
-import * as THREE from "https://unpkg.com/three@0.163.0/build/three.module.js";
+import * as THREE from "./vendor/three.module.min.js";
 import {
   buildScene,
   collides,
@@ -349,9 +349,19 @@ function boot() {
   requestAnimationFrame(tick);
 }
 
-startBtn.addEventListener("click", () => {
+// Подписка на click + дополнительный pointerdown для надёжности iOS Safari
+function handleStart(e) {
+  if (e) { e.preventDefault(); e.stopPropagation(); }
+  if (startOverlay.hidden) return;
   startOverlay.hidden = true;
   showIntro();
-});
+}
+startBtn.addEventListener("click", handleStart);
+startBtn.addEventListener("pointerdown", handleStart);
+startBtn.addEventListener("touchend", handleStart);
 
-window.addEventListener("load", () => setTimeout(boot, 50));
+if (document.readyState === "complete") {
+  setTimeout(boot, 50);
+} else {
+  window.addEventListener("load", () => setTimeout(boot, 50));
+}

@@ -1,4 +1,4 @@
-const CACHE = "restaurant-escape-v3";
+const CACHE = "restaurant-escape-v4";
 const ASSETS = [
   "./",
   "./index.html",
@@ -11,6 +11,7 @@ const ASSETS = [
   "./js/monster.js",
   "./js/pickup.js",
   "./js/controls3d.js",
+  "./js/vendor/three.module.min.js",
   "./assets/favicon.svg"
 ];
 

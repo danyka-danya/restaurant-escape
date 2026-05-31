@@ -2,7 +2,7 @@
    pickup.js — 4 ключевых предмета: рыба, ключ-вилка, фотография, монета.
    У каждого pulsing glow, спавнятся в разных комнатах.
    ========================================================================= */
-import * as THREE from "https://unpkg.com/three@0.163.0/build/three.module.js";
+import * as THREE from "./vendor/three.module.min.js";
 
 export const KEY_TYPES = [
   { id: "key-fork", room: "kitchen", label: "Серебряная вилка",  color: 0xe0e8f0, emoji: "🍴", icon: "🍴" },
